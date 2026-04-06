@@ -1,4 +1,5 @@
 {
+  "generated": "2026-04-01T15:44:08.4500000+00:00",
   "sessions": [
     {
       "mtime": 1775058248397,
@@ -39,6 +40,5 @@
       "id": "pr/494/dotnet/test-a-c--language-feature-with-a-script--plugin--run0",
       "name": "dotnet / Test a C# language feature with a script (plugin, run 0)"
     }
-  ],
-  "generated": "2026-04-01T15:44:08.4500000+00:00"
+  ]
 }

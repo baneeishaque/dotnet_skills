@@ -35,7 +35,6 @@ The result is a fully isolated SDK that:
 |---|---|---|---|
 | Channel or version | No | `11.0` | e.g. `11.0`, `STS`, `LTS`, or an exact version like `11.0.100-preview.2.26159.112` |
 | Quality | No | `preview` | One of: `daily`, `preview`, `GA` |
-| Install directory | No | `.dotnet` | Relative to the project root |
 
 ### Prerequisites
 
@@ -60,8 +59,9 @@ If major version < 10, stop: the `paths` feature requires .NET 10+.
 
 ### Step 3 — Detect operating system
 
-Run `uname -s 2>/dev/null`. If it succeeds → use bash/`dotnet-install.sh`.
-If it fails or returns `MINGW`/`CYGWIN` → use PowerShell/`dotnet-install.ps1`.
+Run `uname -s 2>/dev/null`. If it succeeds (including `MINGW*`, `MSYS*`, `CYGWIN*` —
+these are bash-capable environments like Git Bash) → use bash/`dotnet-install.sh`.
+If it fails (native Windows without Git Bash) → use PowerShell/`dotnet-install.ps1`.
 
 ### Step 4 — Check for existing local SDK
 
@@ -132,7 +132,8 @@ Verify: `./.dotnet/dotnet workload list` (or `.\.dotnet\dotnet.exe workload list
 
 - `paths`: `.dotnet` first (local priority), `$host$` = system-wide fallback.
 - `rollForward: "latestFeature"`: rolls forward across feature bands, not just patches.
-- `errorMessage`: tells teammates how to get the SDK.
+- `allowPrerelease`: set to `true` only when installing a prerelease SDK. Omit for stable versions.
+- `errorMessage`: include only when team install scripts are created (Step 10). Otherwise omit.
 
 If `global.json` already exists, preserve existing properties (`msbuild-sdks`,
 `tools`, etc.) and only add/update the `sdk` section. Warn about overwrites.
@@ -142,8 +143,18 @@ If `global.json` already exists, preserve existing properties (`msbuild-sdks`,
 
 ### Step 9 — Update .gitignore
 
+**macOS / Linux (or Git Bash):**
+
 ```bash
 grep -qxF '.dotnet/' .gitignore 2>/dev/null || echo '.dotnet/' >> .gitignore
+```
+
+**Windows (PowerShell):**
+
+```powershell
+if (-not (Test-Path .gitignore) -or -not (Select-String -Path .gitignore -Pattern '^\\.dotnet/$' -Quiet)) {
+    Add-Content -Path .gitignore -Value '.dotnet/'
+}
 ```
 
 ### Step 10 — Create team install scripts

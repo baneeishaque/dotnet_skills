@@ -60,6 +60,9 @@ scenarios:
 
   - name: "Detect incompatible .NET host version"
     prompt: "Set up a local .NET 11 preview SDK for my project. My dotnet --version shows 9.0.306."
+    assertions:
+      - type: "output_contains"
+        value: "10"
     rubric:
       - "The agent detected that version 9.0.306 is below the .NET 10 requirement"
       - "The agent explained that .NET 10+ is required for the paths feature"

@@ -192,8 +192,16 @@ and contains a `dotnet` binary.
 
 ### Step 6 — Identify the installed version
 
+**macOS / Linux:**
+
 ```bash
-.dotnet/dotnet --version
+./.dotnet/dotnet --version
+```
+
+**Windows (PowerShell):**
+
+```powershell
+.\.dotnet\dotnet.exe --version
 ```
 
 Record the exact version string (e.g., `11.0.100-preview.2.26159.112`). This is
@@ -231,8 +239,16 @@ If yes, install using the **local** `dotnet` binary:
 
 Verify the workload was installed:
 
+**macOS / Linux:**
+
 ```bash
 ./.dotnet/dotnet workload list
+```
+
+**Windows (PowerShell):**
+
+```powershell
+.\.dotnet\dotnet.exe workload list
 ```
 
 > **Always use `./.dotnet/dotnet` for workload commands.** Workload metadata is
@@ -265,7 +281,8 @@ Key details:
 - `paths` lists `.dotnet` first so the local SDK takes priority.
 - `$host$` is a sentinel that tells the resolver to also search the system-wide
   location as a fallback.
-- `rollForward: "latestFeature"` allows patch-level flexibility.
+- `rollForward: "latestFeature"` allows roll-forward to later feature bands
+  (including patches), not just patch-level updates.
 - `errorMessage` tells other developers how to get the SDK if `.dotnet/` is
   missing.
 
@@ -334,9 +351,14 @@ bash /tmp/dotnet-install.sh \
   --quality "$QUALITY" \
   --install-dir "$INSTALL_DIR"
 
-# Auto-detect installed version and create global.json
+# Auto-detect installed version and create/update global.json
 SDK_VERSION=$("$INSTALL_DIR/dotnet" --version)
 echo "Installed SDK version: $SDK_VERSION"
+
+if [ -f global.json ]; then
+  echo "WARNING: global.json already exists. Backing up to global.json.bak"
+  cp global.json global.json.bak
+fi
 
 cat > global.json <<EOF
 {
@@ -388,9 +410,14 @@ Invoke-WebRequest -Uri $scriptUrl -OutFile "$env:TEMP\dotnet-install.ps1"
   -Quality $quality `
   -InstallDir $installDir
 
-# Auto-detect installed version and create global.json
+# Auto-detect installed version and create/update global.json
 $sdkVersion = & "$installDir\dotnet.exe" --version
 Write-Host "Installed SDK version: $sdkVersion"
+
+if (Test-Path 'global.json') {
+    Write-Host "WARNING: global.json already exists. Backing up to global.json.bak"
+    Copy-Item 'global.json' 'global.json.bak'
+}
 
 @"
 {

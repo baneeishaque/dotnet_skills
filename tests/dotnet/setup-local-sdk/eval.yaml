@@ -70,10 +70,10 @@ scenarios:
     timeout: 120
 
   - name: "Detect incompatible .NET host version"
-    prompt: "Set up a local .NET 11 preview SDK for my project."
+    prompt: "Set up a local .NET 11 preview SDK for my project. My current dotnet --version shows 9.0.306."
     rubric:
-      - "The agent checked the host dotnet version"
-      - "The agent detected or mentioned that .NET 10+ host is required"
+      - "The agent detected that the host version (9.0.306) is below the .NET 10 requirement"
+      - "The agent mentioned that .NET 10+ host is required for the paths feature"
       - "The agent instructed the user to install .NET 10+ system-wide before proceeding"
     timeout: 120
 

@@ -67,6 +67,8 @@ scenarios:
           source: "fixtures/v3-assert-changes/TestProject.csproj"
         - path: "CalculatorTests.cs"
           source: "fixtures/v3-assert-changes/CalculatorTests.cs"
+      commands:
+        - "dotnet restore"
     assertions:
       - type: "output_matches"
         pattern: "(ThrowsExactly|ThrowsException)"
@@ -81,7 +83,7 @@ scenarios:
       - "Identifies ClassCleanupBehavior.EndOfClass removal — recommends just [ClassCleanup]"
       - "Identifies TestContext.Properties.Contains → ContainsKey change"
       - "Identifies TestTimeout.Infinite removal — recommends int.MaxValue"
-    timeout: 240
+    timeout: 300
 
   # ============================================================================
   # Goal 4: Dropped target framework
@@ -159,6 +161,8 @@ scenarios:
                     Assert.IsTrue(true);
                 }
             }
+      commands:
+        - "dotnet restore"
     assertions:
       - type: "output_matches"
         pattern: "(CallerFilePath|CallerLineNumber|caller.?info)"
@@ -169,7 +173,7 @@ scenarios:
       - "Shows how to propagate caller info parameters to the base class constructor"
       - "Identifies that [TestMethod(\"display name\")] must change to [TestMethod(DisplayName = \"display name\")]"
       - "Provides concrete fixed code for the custom attribute"
-    timeout: 180
+    timeout: 240
 
   # ============================================================================
   # Goal 6: Behavioral changes awareness
@@ -384,6 +388,8 @@ scenarios:
           source: "fixtures/v3-sdk-project/TestProject.csproj"
         - path: "DiagnosticTests.cs"
           source: "fixtures/v3-sdk-project/DiagnosticTests.cs"
+      commands:
+        - "dotnet restore"
     assertions:
       - type: "output_matches"
         pattern: "(ManagedType|FullyQualifiedTestClassName)"
@@ -400,7 +406,38 @@ scenarios:
     timeout: 240
 
   # ============================================================================
-  # Goal 10: Recognize v3 project needs v3→v4 migration, not v1→v3
+  # Goal 10: Sealed custom TestMethodAttribute with Timeout changes
+  # ============================================================================
+
+  - name: "Fix sealed custom TestMethodAttribute with Timeout changes"
+    prompt: |
+      After upgrading to MSTest 4.1.0, my test project fails to compile. I have a sealed
+      custom TestMethodAttribute subclass that overrides Execute, and several tests use
+      [Timeout(TestTimeout.Infinite)]. How do I fix these errors?
+    setup:
+      files:
+        - path: "TestProject.csproj"
+          source: "fixtures/v3-sealed-testmethod/TestProject.csproj"
+        - path: "PerformanceTests.cs"
+          source: "fixtures/v3-sealed-testmethod/PerformanceTests.cs"
+      commands:
+        - "dotnet restore"
+    assertions:
+      - type: "output_matches"
+        pattern: "(ExecuteAsync|Execute.*Async)"
+      - type: "output_matches"
+        pattern: "(Task<TestResult|Task<.*TestResult)"
+      - type: "output_matches"
+        pattern: "(TestTimeout|int\\.MaxValue|Infinite)"
+    rubric:
+      - "Identifies Execute → ExecuteAsync breaking change and shows the async signature"
+      - "Shows how to propagate CallerInfo parameters to the base constructor in the sealed attribute"
+      - "Identifies TestTimeout.Infinite removal and recommends int.MaxValue"
+      - "Provides concrete fixed code for the sealed TimedTestMethodAttribute"
+    timeout: 240
+
+  # ============================================================================
+  # Goal 11: Recognize v3 project needs v3→v4 migration, not v1→v3
   # ============================================================================
 
   - name: "Correctly identify MSTest v3 project and recommend v4 migration"

@@ -1,0 +1,259 @@
+# Instincts generated from https://github.com/Baneeishaque/dotnet_skills
+# Generated: 2026-05-04T11:57:43.156Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: dotnet_skills-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Commit Length
+
+## Action
+
+Write moderate-length commit messages (~66 characters)
+
+## Evidence
+
+- Average commit message length: 66 chars
+- Based on 1 commits
+
+---
+id: dotnet_skills-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Naming Files
+
+## Action
+
+Use PascalCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: PascalCase
+
+---
+id: dotnet_skills-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: dotnet_skills-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: dotnet_skills-instinct-file-naming
+trigger: "When creating a new file"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct File Naming
+
+## Action
+
+Name the file using PascalCase
+
+## Evidence
+
+- Pattern in namingConventions.files: PascalCase
+
+---
+id: dotnet_skills-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Class Naming
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern in namingConventions.classes: PascalCase
+
+---
+id: dotnet_skills-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Function Naming
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern in namingConventions.functions: camelCase
+
+---
+id: dotnet_skills-instinct-constant-naming
+trigger: "When defining a constant"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Constant Naming
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern in namingConventions.constants: SCREAMING_SNAKE_CASE
+
+---
+id: dotnet_skills-instinct-import-style
+trigger: "When importing modules or files"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Import Style
+
+## Action
+
+Use relative imports
+
+## Evidence
+
+- Pattern in importStyle: relative
+
+---
+id: dotnet_skills-instinct-export-style
+trigger: "When exporting modules or members"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in exportStyle: named
+
+---
+id: dotnet_skills-instinct-commit-format
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Commit Format
+
+## Action
+
+Use a freeform message without a required prefix
+
+## Evidence
+
+- commits.type: freeform
+- commits.prefixes: []
+- Example: 'Honor --allow-repo-traversal for /-prefixed file references (#604)'
+
+---
+id: dotnet_skills-instinct-commit-length
+trigger: "When writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Commit Length
+
+## Action
+
+Keep the commit message concise (around 66 characters on average)
+
+## Evidence
+
+- commits.averageLength: 66
+
+---
+id: dotnet_skills-instinct-test-location
+trigger: "When adding new tests"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: Baneeishaque/dotnet_skills
+---
+
+# Dotnet_skills Instinct Test Location
+
+## Action
+
+Place test files in mixed locations (not strictly separated from source files)
+
+## Evidence
+
+- architecture.folderStructure.testLocation: mixed
+
